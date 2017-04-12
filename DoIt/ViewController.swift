@@ -77,6 +77,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return [task1,task2,task3]
         
     }
+    
+    // When creating a button, be sure to label a SPECIFC action (note 'plusTapped'), and link the segue right in the button tap action with performSegue
+    @IBAction func plusTapped(_ sender: Any) {
+        
+        // 'nil' means nothing
+        // For the withIdentifier section, go back to Storyboard and click on the seque between the two boards. In the right hand side under the Storyboard Segue section, there is an identifier section. Name it, and once you do, you insert the identifier into the following segue code. This allows the app to PERFORM a SEGUE with the specific IDENTIFIER or LOCATION
+        
+        // Basically, when tapped, perform segue to...
+        
+        performSegue(withIdentifier: "addSegue", sender: nil)
+    
+    }
 
 }
 
