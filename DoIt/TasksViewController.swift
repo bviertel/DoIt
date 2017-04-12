@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TasksViewController.swift
 //  DoIt
 //
 //  Created by Ann Marie Seyerlein on 4/11/17.
@@ -9,7 +9,7 @@
 import UIKit
 
 // Inserted UITableViewDelegate and UITableViewDataSource
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // Table View Variable
     @IBOutlet weak var tableView: UITableView!
@@ -88,6 +88,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         performSegue(withIdentifier: "addSegue", sender: nil)
     
+    }
+    
+    //Before we move around, reference back to each other
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextVC = segue.destination as! CreateTaskViewController
+        
+        // Sets 'previousVC' in nextVC (CreateTaskViewController as declared above) equal to this View Controller
+        nextVC.previousVC = self
     }
 
 }
