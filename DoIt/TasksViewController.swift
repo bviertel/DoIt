@@ -29,7 +29,9 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         // Generates an initial task list using the 'makeTask' function from below.
         
-        tasks = makeTasks()
+        
+        // Elimated the following line because we removed the method to create the task, because we do not want it prepopulated
+        // tasks = makeTasks()
         
         // Where does it get it's data from
         
@@ -84,7 +86,9 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         performSegue(withIdentifier: "selectTaskSegue" , sender: task)
     }
     
-    func makeTasks() -> [Task] {
+    // We got rid of the following code so that our list is not prepopulated
+    
+    /*func makeTasks() -> [Task] {
         
         let task1 = Task()
         task1.name = "Walk the dog"
@@ -98,7 +102,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         return [task1,task2,task3]
         
-    }
+    }*/
     
     // When creating a button, be sure to label a SPECIFC action (note 'plusTapped'), and link the segue right in the button tap action with performSegue
     @IBAction func plusTapped(_ sender: Any) {
@@ -116,13 +120,15 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // For multiple segues, use IF statement
-        if segue.identifier == "addSegue" {
+        // Do not need: Core Data related
+        /*if segue.identifier == "addSegue" {
             
             let nextVC = segue.destination as! CreateTaskViewController
             
             // Sets 'previousVC' in nextVC (CreateTaskViewController as declared above) equal to this View Controller
-            nextVC.previousVC = self
-        }
+            // Do not need: Core Data Related
+            // nextVC.previousVC = self
+        }*/
         
         if segue.identifier == "selectTaskSegue" {
          

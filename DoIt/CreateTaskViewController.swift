@@ -19,8 +19,8 @@ class CreateTaskViewController: UIViewController {
     @IBOutlet weak var importantSwitch: UISwitch!
     
     // Variable 'previousVC' holds the information for the Previous View Controller, which happens to be the TasksViewController
-    
-    var previousVC = TasksViewController()
+    // Do not need: Core Data related
+    // var previousVC = TasksViewController()
     
     override func viewDidLoad() {
         
@@ -31,8 +31,8 @@ class CreateTaskViewController: UIViewController {
     /** When 'Add' button is tapped:
         1.) Initialize 'task'
         2.) Set values to variables 'name' and 'important' in 'task'
-        3.) Add 'task' to array in TasksViewController
-        4.) Refresh data in TasksViewController
+        3***REMOVED.) Add 'task' to array in TasksViewController
+        4***REMOVED.) Refresh data in TasksViewController
         5.) Go back to TasksViewController (Popping View Controller)
     */
     
@@ -40,22 +40,27 @@ class CreateTaskViewController: UIViewController {
         
         // 1.)
         
-        let task = Task()
+        // Following is Core Data related
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        let task = Task(context: context)
         
         // 2.)
         
         task.name = taskNameTextField.text!
         task.important = importantSwitch.isOn
         
+        // Following is Core Data related
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         // 3.)
-        
-        previousVC.tasks.append(task)
+        // Don't need: Core Data Related
+        // previousVC.tasks.append(task)
         
         // 4.)
+        // Don't need: Core Data Related
+        // previousVC.tableView.reloadData()
         
-        previousVC.tableView.reloadData()
-        
-        // 5.)
+        // 5.) Pop Back
         
         navigationController?.popViewController(animated: true)
         
