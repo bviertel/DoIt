@@ -10,29 +10,42 @@ import UIKit
 
 // Inserted UITableViewDelegate and UITableViewDataSource
 class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    // Table View Variable
+    
+    // Variable for the 'tableView' in the TasksViewController
+    
     @IBOutlet weak var tableView: UITableView!
+    
+    // Array of type Task that holds all of the added and pre-existing tasks
     
     var tasks : [Task] = []
     
+    // Variable for the 'selectedIndex'. This is primarily used for the deletion of a task once the 'Complete' button is clicked on the CompleteTaskViewController. Used to temporarily store the index of the selected item in the array for location purposes in the array.
+    
+    var selectedIndex = 0
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        // Do this before dataSource and Delegate
+        super.viewDidLoad()
+        
+        // Generates an initial task list using the 'makeTask' function from below.
+        
         tasks = makeTasks()
         
         // Where does it get it's data from
+        
         tableView.dataSource = self
         
         tableView.delegate = self
         
     }
     
-    // Number of rows in Table, 'numberOfRowsInSection'
+    // Number of rows in Table, 'numberOfRowsInSection'. Gets the number of rows from the amount of array entries
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        
+        // Gets the number of rows from the count of array entries
+
         return tasks.count
         
     }
@@ -59,7 +72,16 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         // Returns the constant 'cell'
         return cell
+        
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectedIndex = indexPath.row
+        
+        let task = tasks[indexPath.row]
+        
+        performSegue(withIdentifier: "selectTaskSegue" , sender: task)
     }
     
     func makeTasks() -> [Task] {
@@ -73,7 +95,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let task3 = Task()
         task3.name = "Mow the lawn"
         task3.important = false
-
+        
         return [task1,task2,task3]
         
     }
@@ -87,16 +109,31 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // Basically, when tapped, perform segue to...
         
         performSegue(withIdentifier: "addSegue", sender: nil)
-    
-    }
-    
-    //Before we move around, reference back to each other
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextVC = segue.destination as! CreateTaskViewController
         
-        // Sets 'previousVC' in nextVC (CreateTaskViewController as declared above) equal to this View Controller
-        nextVC.previousVC = self
     }
-
+    
+    // Before we move around, reference back to each other
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // For multiple segues, use IF statement
+        if segue.identifier == "addSegue" {
+            
+            let nextVC = segue.destination as! CreateTaskViewController
+            
+            // Sets 'previousVC' in nextVC (CreateTaskViewController as declared above) equal to this View Controller
+            nextVC.previousVC = self
+        }
+        
+        if segue.identifier == "selectTaskSegue" {
+         
+            let nextVC = segue.destination as! CompleteTaskViewController
+            
+            nextVC.task = sender as! Task
+            
+            nextVC.previousVC = self
+            
+        }
+    }
+    
 }
 
