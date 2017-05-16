@@ -18,6 +18,10 @@ class CreateTaskViewController: UIViewController {
     
     @IBOutlet weak var importantSwitch: UISwitch!
     
+    // Link to 'taskDescTextField'
+    
+    @IBOutlet weak var taskDescTextField: UITextView!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -40,6 +44,7 @@ class CreateTaskViewController: UIViewController {
         
         task.name = taskNameTextField.text!
         task.important = importantSwitch.isOn
+        task.desc = taskDescTextField.text!
         
         // Following is Core Data related, saving the data
         

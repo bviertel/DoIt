@@ -18,6 +18,8 @@ class CompleteTaskViewController: UIViewController {
     
     @IBOutlet weak var completeTaskLabel: UILabel!
     
+    @IBOutlet weak var completeTaskDesc: UILabel!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -33,6 +35,8 @@ class CompleteTaskViewController: UIViewController {
             completeTaskLabel.text = task!.name!
             
         }
+        
+        completeTaskDesc.text = task!.desc!
 
     }
     
