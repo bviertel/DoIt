@@ -35,6 +35,12 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
     }
     
+    // Called everytime view controller is about to show (First start, going back to, etc)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getTasks()
+    }
+    
     // Number of rows in Table, 'numberOfRowsInSection'. Gets the number of rows from the amount of array entries
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,8 +101,21 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // Retrieving Core Data using MSFetch. Pulling from Core Data
     func getTasks() {
         
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
+        // 'Do' each of the 'try's, and 'catch' error if thrown
+        do {
         
+            // Fetches the task
+            // Gives back array of Task object
+            tasks = try context.fetch(Task.fetchRequest()) as! [Task]
+            print(tasks)
+        
+        } catch {
+            
+            print("Oops we have an error!")
+            
+        }
     }
     
     // Prepares for ALL segues from view controller
