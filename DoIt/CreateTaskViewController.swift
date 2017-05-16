@@ -10,11 +10,11 @@ import UIKit
 
 class CreateTaskViewController: UIViewController {
 
-    // Variable to hold the 'taskNameTextField' value
+    // Link to 'taskNameTextField'
     
     @IBOutlet weak var taskNameTextField: UITextField!
     
-    // Variable to hold the 'importantSwitch' value T/F
+    // Link to 'importantSwitch' T/F
     
     @IBOutlet weak var importantSwitch: UISwitch!
     
@@ -24,30 +24,28 @@ class CreateTaskViewController: UIViewController {
         
     }
     
-    /** When 'Add' button is tapped:
-        1.) Initialize 'task'
-        2.) Set values to variables 'name' and 'important' in 'task'
-        3.) Go back to TasksViewController (Popping View Controller)
-    */
+    // Link to '+' button
     
     @IBAction func addTapped(_ sender: Any) {
         
-        // 1.)
+        // Initialize 'task'
         
         // Following is Core Data related
+        
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         let task = Task(context: context)
         
-        // 2.)
+        // Set values accordingly in 'task'
         
         task.name = taskNameTextField.text!
         task.important = importantSwitch.isOn
         
-        // Following is Core Data related
+        // Following is Core Data related, saving the data
+        
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
-        // 3.) Pop Back
+        // Pop back to Table View
         
         navigationController?.popViewController(animated: true)
         

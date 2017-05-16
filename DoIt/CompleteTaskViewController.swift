@@ -10,7 +10,7 @@ import UIKit
 
 class CompleteTaskViewController: UIViewController {
 
-    // Variable 'task' to hold 'Task' when selected and sent from the Main View Controller
+    // Variable 'task' holds Optional Task as 'nil'
     
     var task : Task? = nil
     
@@ -18,13 +18,11 @@ class CompleteTaskViewController: UIViewController {
     
     @IBOutlet weak var completeTaskLabel: UILabel!
     
-
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        // Copied from 'CreateTaskViewController' to add exclamation point to the beginning of 'tasks' with a 'true' important value
+        // Add exclamation point to the beginning of 'tasks' with a 'true' important value
         
         if task!.important {
             
@@ -37,23 +35,24 @@ class CompleteTaskViewController: UIViewController {
         }
 
     }
-
-    /** When the 'Complete' button is tapped:
-        1.) Remove the previously selected item
-        2.) Reload the data in the table
-        3.) Go back to the Main View Controller
-    */
+    
+    // When Complete Button is Tapped
     
     @IBAction func CompleteTapped(_ sender: Any) {
         
         // Get Context (Task)
+        
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         // Delete Context (Task)
+        
         context.delete(task!)
         
         // Save Context (Know that delete happened)
+        
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        
+        // Pop back to Table View
         
         navigationController?.popViewController(animated: true)
         
