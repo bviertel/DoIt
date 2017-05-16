@@ -19,10 +19,6 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var tasks : [Task] = []
     
-    // Variable for the 'selectedIndex'. This is primarily used for the deletion of a task once the 'Complete' button is clicked on the CompleteTaskViewController. Used to temporarily store the index of the selected item in the array for location purposes in the array.
-    
-    var selectedIndex = 0
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -39,6 +35,8 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewWillAppear(_ animated: Bool) {
         getTasks()
+        // Reloads the TableView to immediately show data that was recently entered
+        tableView.reloadData()
     }
     
     // Number of rows in Table, 'numberOfRowsInSection'. Gets the number of rows from the amount of array entries
@@ -64,11 +62,11 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if task.important {
             
-            cell.textLabel!.text = "❗️ \(task.name)"
+            cell.textLabel!.text = "❗️ \(task.name!)"
             
         } else {
             
-            cell.textLabel!.text = task.name
+            cell.textLabel!.text = task.name!
             
         }
         
@@ -78,8 +76,6 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        selectedIndex = indexPath.row
         
         let task = tasks[indexPath.row]
         
@@ -127,9 +123,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
          
             let nextVC = segue.destination as! CompleteTaskViewController
             
-            nextVC.task = sender as! Task
-            
-            nextVC.previousVC = self
+            nextVC.task = sender as? Task
             
         }
     }

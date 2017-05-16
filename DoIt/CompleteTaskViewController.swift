@@ -12,15 +12,13 @@ class CompleteTaskViewController: UIViewController {
 
     // Variable 'task' to hold 'Task' when selected and sent from the Main View Controller
     
-    var task = Task()
+    var task : Task? = nil
     
     // Variable label to change to whatever 'task' has been selected from the Main View Controller
     
     @IBOutlet weak var completeTaskLabel: UILabel!
     
-    // Variable 'previousVC' holds the information for the Previous View Controller, which happens to be the Main View Controller
-    
-    var previousVC = TasksViewController()
+
     
     override func viewDidLoad() {
         
@@ -28,13 +26,13 @@ class CompleteTaskViewController: UIViewController {
         
         // Copied from 'CreateTaskViewController' to add exclamation point to the beginning of 'tasks' with a 'true' important value
         
-        if task.important {
+        if task!.important {
             
-            completeTaskLabel.text = "❗️ \(task.name)"
+            completeTaskLabel.text = "❗️ \(task!.name!)"
             
         } else {
             
-            completeTaskLabel.text = task.name
+            completeTaskLabel.text = task!.name!
             
         }
 
@@ -48,15 +46,14 @@ class CompleteTaskViewController: UIViewController {
     
     @IBAction func CompleteTapped(_ sender: Any) {
         
-        // 1.)
+        // Get Context (Task)
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        previousVC.tasks.remove(at: previousVC.selectedIndex)
+        // Delete Context (Task)
+        context.delete(task!)
         
-        // 2.)
-        
-        previousVC.tableView.reloadData()
-        
-        // 3.)
+        // Save Context (Know that delete happened)
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
         navigationController?.popViewController(animated: true)
         
